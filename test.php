@@ -8,17 +8,24 @@ use NNV\YQL\YQL;
 use NNV\YQL\QueryBuilder;
 
 $q = new QueryBuilder();
+$yql = new YQL();
 
-$sql = $q->select(['id', 'name', 'abc'])
+function dd($var)
+{
+   echo "<pre>";
+   var_dump($var);
+   echo "</pre>";
+}
+
+$sql = $q->select('*')
          ->from('html')
-         ->where('url', 'http://google.com')
-         ->where(function($query) {
-            return $query->orWhere('xpath', 'html/head/title')
-                         ->orWhere('xpath', 'body/article/p');
-         })
-         ->orWhere('xpath', 'html/head/meta')
-         ->orderBy('id')
-         ->orderBy('name', 'DESC')
-         ->getQuery();
+         ->where('url', 'http://m.nhaccuatui.com/tim-kiem/bai-hat?q=anh%20that%20ngoc')
+         ->where('xpath', '//div[contains(@class, "bgmusic")]/h3/a');
 
-echo $sql;
+$a = $yql->execute($sql);
+// echo($sql->getQuery());
+$obj = json_decode($a);
+
+dump($obj);
+
+// echo $sql;
